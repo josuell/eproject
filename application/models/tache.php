@@ -16,10 +16,10 @@ class tache extends CI_Model
         return $query->result();
     }
 
-    public function create($idetailtache,$idprojet,$NOMTACHE,$estimation,$tempspasse,$TEMPSRESTE,$etat)
+    public function create($idetailtache,$idprojet,$NOMTACHE,$estimation,$tempspasse,$TEMPSRESTE,$etat,$debut)
     {
-        $sql = "INSERT INTO TACHE ( IDPROJET,IDDETAILTACHE ,NOMTACHE, TEMPSESTIME, TEMPSRESTE, TEMPSPASSE, ETAT) VALUES (?,?,?,?,?,?,?)";
-        if ($this->db->query($sql, array($idprojet,$idetailtache,$NOMTACHE,$estimation,$TEMPSRESTE,$tempspasse,$etat))) {
+        $sql = "INSERT INTO TACHE ( IDPROJET,IDDETAILTACHE ,NOMTACHE, TEMPSESTIME, TEMPSRESTE, TEMPSPASSE, ETAT,debut) VALUES (?,?,?,?,?,?,?,?)";
+        if ($this->db->query($sql, array($idprojet,$idetailtache,$NOMTACHE,$estimation,$TEMPSRESTE,$tempspasse,$etat,$debut))) {
             return 0;
         } else {
             return -1;
@@ -68,6 +68,16 @@ class tache extends CI_Model
         $result = $query->result();
         return $result;
     }
+    public function getOneTache($idtache){
+        $sql = "select * from tache join association_2 on association_2.IDTACHE=tache.IDTACHE join projet on projet.IDPROJET=tache.IDPROJET where tache.IDTACHE = ? ";
+        $query = $this->db->query($sql,$idtache);
+        $result = $query->result();
+        if (count($result) > 0) {
+            return $result[0];
+        } else {
+            return null;
+        }
+    }
     public function getTache($idProjet){
         $sql = "select * from tache where IDPROJET = ? ";
         $query = $this->db->query($sql,$idProjet);
@@ -86,28 +96,16 @@ class tache extends CI_Model
         $result = $query->result();
         return $result; 
     }
-
-    public function getTacheUser($idprojet, $iduser)
-    {
-        $sql = "select * from tache t join association_2 a on t.IDTACHE = a.IDTACHE where IDPROJET = ? and IDDESIGNE = ?";
-        $query = $this->db->query($sql, array($idprojet, $iduser));
-        return $query->result();
+    public function creatfile($idtache,$nom){
+        $sql = "insert into file(NOMFICHIER,IDTACHE) values(?,?)";
+        $query = $this->db->query($sql,array($nom,$idtache));
+        $result = $query->result();
+        return $result; 
     }
-
-    public function getTachesNonAssignees($idprojet)
-    {
-        $sql = "select * from tache t where IDTACHE not in (select idtache from association_2) and IDPROJET = ?";
-        $query = $this->db->query($sql, array( $idprojet));
-        return $query->result();
-    }
-
-    public function assigner($idtache, $iduser, $idteamlead)
-    {
-        $sql = "insert into association_2 values (?,?,?)";
-        if($this->db->query($sql, array($idteamlead, $idtache, $iduser))){
-            return 0;
-        } else {
-            return -1;
-        }
+    public function getfile($idtache){
+        $sql = "select * from file where IDTACHE = ? ";
+        $query = $this->db->query($sql,array($idtache));
+        $result = $query->result();
+        return $result; 
     }
 }

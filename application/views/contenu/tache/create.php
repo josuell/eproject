@@ -38,6 +38,10 @@
                                     <label class="control-label" for="inputSuccess">temps estime</label>
                                     <input type="text" class="form-control" id="inputSuccess" name="estimation" value="00:00:00">
                                 </div>
+                                <div class="form-group has-success">
+                                    <label class="control-label" for="inputSuccess">debut des travaux</label>
+                                    <input type="text" class="form-control" id="inputSuccess" name="debut" >
+                                </div>
                                
                                 <button type="submit" class="btn btn-default">ajouter</button>
                             </form>

@@ -85,7 +85,16 @@ class admin extends CI_Model
             return -1;
         }
     }
-    public function find($motcle){
-        $sql = "select * from projet p join tache t on t.idprojet=p.idprojet join user";
+    public function findtache($motcle){
+        $sql = "select * from tache t where nomtache like '%".$motcle."%'";
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function finduser($motcle){
+        $sql = "select * from recherche where anarana like '%".$motcle."%'";
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
     }
 }

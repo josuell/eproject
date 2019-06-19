@@ -7,7 +7,6 @@ class CrudUser extends CI_Controller {
         parent::__construct();
         $this->load->model('categorie');
         $this->load->model('user');
-        $this->load->model('projet');
         $this->load->model('roles');
         $this->load->model('admin');
     }
@@ -95,10 +94,7 @@ class CrudUser extends CI_Controller {
         }else redirect('Connection/connectionUser');
     }
     public function profilseul($user){
-        if($this->session->has_userdata('admin')){
-            $user = $this->session->userdata('admin');
-        }
-        else redirect('Connection');
+        
             $utilisateur = $this->user->get($user);
             $projet = $this->roles->getMyProjet($user);
             $data = array(
@@ -123,21 +119,17 @@ class CrudUser extends CI_Controller {
     public function creerAdmin(){
         $this->admin->create("RAKOTO","Arisoa","arisoa@yahoo.com","arisoa");
     }
-    public function gantt()
-    {
-        $projets = $this->projet->get_entries();
-        $data = array(
-            'page' => 'contenu/gantt',
-            'projets' => $projets
-        );
-        $this->load->view('index', $data);
+    public function gantt(){
+        $this->load->view('gant');
     }
     public function recherche(){
         $motcle = $this->input->get("find");
-        $reponse = $this->admin->find($motcle);
+        $reponse = $this->admin->finduser($motcle);
+        $tache = $this->admin->findtache($motcle);
         $data = array(
             'page' => 'contenu/find',
-            'resultat' => $reponse
+            'user' => $reponse,
+            'tache' => $tache,
         );
         $this->load->view('index',$data);
     }
