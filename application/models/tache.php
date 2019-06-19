@@ -80,8 +80,8 @@ class tache extends CI_Model
 
     public function getTachesNonAssignees($idprojet)
     {
-        $sql = "select * from tache t where IDTACHE not in (select idtache from association_2 where IDPROJET = ?)";
-        $query = $this->db->query($sql, array($idprojet));
+        $sql = "select * from tache t where IDTACHE not in (select idtache from association_2) and IDPROJET = ?";
+        $query = $this->db->query($sql, array( $idprojet));
         return $query->result();
     }
 
@@ -103,3 +103,5 @@ class tache extends CI_Model
         }
     }
 }
+
+//SELECT a.IDDESIGNE, t.IDPROJET, sum(TEMPSPASSE) FROM tache t right join association_2 a on a.IDTACHE = t.IDTACHE GROUP BY a.IDDESIGNE, t.IDPROJET
