@@ -42,14 +42,16 @@
                     <?php if(isset($_SESSION['admin'])){?>
                         <ul class="nav" id="side-menu">
                             <li class="sidebar-search">
+                                <form action="<?php echo base_url('CrudUser/recherche')?>" method="get">
                                 <div class="input-group custom-search-form">
-                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <input type="text" class="form-control" placeholder="Search..." name="find">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </span>
                                 </div>
+                                </form>
                                 <!-- /input-group -->
                             </li>
                             <li>

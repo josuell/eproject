@@ -97,15 +97,13 @@ class CrudUser extends CI_Controller
         } else redirect('Connection/connectionUser');
     }
 
-    public function profilseul($iduser)
+    public function profilseul($user)
     {
         if ($this->session->has_userdata('admin')) {
             $user = $this->session->userdata('admin');
-        } else {
-            redirect('Connection');
-        }
-        $utilisateur = $this->user->get($iduser);
-        $projet = $this->roles->getMyProjet($iduser);
+        } else redirect('Connection');
+        $utilisateur = $this->user->get($user);
+        $projet = $this->roles->getMyProjet($user);
         $data = array(
             'projet' => $projet,
             'page' => 'contenu/profil',
@@ -141,4 +139,16 @@ class CrudUser extends CI_Controller
         );
         $this->load->view('index', $data);
     }
+
+    public function recherche()
+    {
+        $motcle = $this->input->get("find");
+        $reponse = $this->admin->find($motcle);
+        $data = array(
+            'page' => 'contenu/find',
+            'resultat' => $reponse
+        );
+        $this->load->view('index', $data);
+    }
+
 }

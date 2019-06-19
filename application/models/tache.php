@@ -16,10 +16,10 @@ class tache extends CI_Model
         return $query->result();
     }
 
-    public function create($idetailtache, $idprojet, $NOMTACHE, $estimation, $tempspasse, $resteafaire, $etat)
+    public function create($idetailtache, $idprojet, $NOMTACHE, $estimation, $tempspasse, $TEMPSRESTE, $etat)
     {
         $sql = "INSERT INTO TACHE ( IDPROJET,IDDETAILTACHE ,NOMTACHE, TEMPSESTIME, TEMPSRESTE, TEMPSPASSE, ETAT) VALUES (?,?,?,?,?,?,?)";
-        if ($this->db->query($sql, array($idprojet, $idetailtache, $NOMTACHE, $estimation, $resteafaire, $tempspasse, $etat))) {
+        if ($this->db->query($sql, array($idprojet, $idetailtache, $NOMTACHE, $estimation, $TEMPSRESTE, $tempspasse, $etat))) {
             return 0;
         } else {
             return -1;
@@ -28,7 +28,7 @@ class tache extends CI_Model
 
     public function delete($id)
     {
-        if ($this->db->query("DELETE FROM TACHE WHERE IDTACHE= ?", array($id))) {
+        if ($this->db->query("DELETE FROM TACHE WHERE IDTACHE= ? ", array($id))) {
             return 0;
         } else {
             return -1;
@@ -37,7 +37,7 @@ class tache extends CI_Model
 
     public function get($id)
     {
-        $sql = "SELECT * FROM TACHE WHERE IDTACHE = ?";
+        $sql = "SELECT * FROM TACHE WHERE IDTACHE= ?";
         $query = $this->db->query($sql, array($id));
         $result = $query->result();
         if (count($result) > 0) {
@@ -48,12 +48,12 @@ class tache extends CI_Model
     }
 
 
-    public function edit($id, $nom, $estimation, $tempestime, $resteafaire, $etat)
+    public function edit($id, $nom, $estimation, $tempestime, $TEMPSRESTE, $etat)
     {
-        $sql = "UPDATE client SET NOMTACHE = ? ,TEMPSESTIME = ? ,TEMPSPASSE = ?, RESTEAFAIRE = ?, ETAT = ? ";
+        $sql = "UPDATE TACHE SET NOMTACHE = ? ,TEMPSESTIME = ? ,TEMPSPASSE = ?, TEMPSRESTE = ?, ETAT = ? ";
         $param = null;
 
-        $param = array($nom, $estimation, $tempestime, $resteafaire, $etat, $id);
+        $param = array($nom, $estimation, $tempestime, $TEMPSRESTE, $etat, $id);
 
         $sql .= "WHERE IDTACHE= ?";
         if ($this->db->query($sql, $param)) {
@@ -63,10 +63,10 @@ class tache extends CI_Model
         }
     }
 
-    public function getTache($idProjet)
+    public function getMyTache($iduser, $idprojet)
     {
-        $sql = "select * from tache where IDPROJET = ? ";
-        $query = $this->db->query($sql, $idProjet);
+        $sql = "select * from tache join association_2 on association_2.IDTACHE=tache.IDTACHE where IDDESIGNE = ? and IDPROJET = ? ";
+        $query = $this->db->query($sql, $iduser, $idprojet);
         $result = $query->result();
         return $result;
     }
@@ -81,8 +81,16 @@ class tache extends CI_Model
     public function getTachesNonAssignees($idprojet)
     {
         $sql = "select * from tache t where IDTACHE not in (select idtache from association_2) and IDPROJET = ?";
-        $query = $this->db->query($sql, array( $idprojet));
+        $query = $this->db->query($sql, array($idprojet));
         return $query->result();
+    }
+
+    public function getTache($idProjet)
+    {
+        $sql = "select * from tache where IDPROJET = ? ";
+        $query = $this->db->query($sql, $idProjet);
+        $result = $query->result();
+        return $result;
     }
 
     public function getDetailTache()
@@ -93,14 +101,12 @@ class tache extends CI_Model
         return $result;
     }
 
-    public function assigner($idtache, $iduser, $idteamlead)
+    public function getRetard($idprojet)
     {
-        $sql = "insert into association_2 values (?,?,?)";
-        if($this->db->query($sql, array($idteamlead, $idtache, $iduser))){
-            return 0;
-        } else {
-            return -1;
-        }
+        $sql = "select * from tache where tempspasse>tempsestime and idprojet= ? ";
+        $query = $this->db->query($sql, array($idprojet));
+        $result = $query->result();
+        return $result;
     }
 }
 

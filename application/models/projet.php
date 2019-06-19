@@ -77,12 +77,13 @@ class projet extends CI_Model
         return $result;
     }
 
-    public function avancementProjetTL($idprojet, $user)
+    public function avancementProjetTL()
     {
-        $sql = "select idprojet, iddesigneur,
-         (sum(tempspasse)/­sum(tempsestime))*100­ as avancement
-          from tache t join tache_user tu on t.idtache = tu.idtache 
-          where idprojet = ? and iddesigneur = ? group by idprojet, iddesigneur";
+        $sql = "select t.IDPROJET,nomprojet, iddesigneur,
+        (sum(tempspasse)/sum(tempsestime))*100 as avancement
+         from tache t join association_2 tu on t.idtache = tu.idtache 
+           join projet on projet.idprojet = t.idprojet
+          group by t.IDPROJET, iddesigneur";
         $query = $this->db->query($sql, array($idprojet, $user));
         $result = $query->result();
         return $result;
@@ -93,16 +94,11 @@ class projet extends CI_Model
         $sql = "select tache.idprojet, nomprojet,
         sum(tempspasse)
          from tache join projet on projet.IDPROJET=tache.IDPROJET  where datefin<='" . $dateFin . "' and tache.iddetailtache=3";
+
     }
 
-    public function getDeveloppeurs($idprojet)
+    public function getTauxOccupationProjet($idprojet)
     {
-        $sql = "select u.* from user u join roles r on r.IDUSER = u.IDUSER where idprojet = ? and IDCATEGORIE = ?";
-        $query = $this->db->query($sql, array($idprojet, 3));
-        return $query->result();
-    }
-
-    public function getTauxOccupationProjet($idprojet){
         $sql = "select ttp.IDPROJET, IDDESIGNE, ((tmpspasse*100)/tmpsestime) tauxoccup  from (SELECT a.IDDESIGNE, t.IDPROJET, sum(TEMPSPASSE) tmpspasse FROM tache t 
 join association_2 a on a.IDTACHE = t.IDTACHE 
 GROUP BY a.IDDESIGNE, t.IDPROJET) tempspasse join tempstotalprojet ttp on tempspasse.IDPROJET = ttp.IDPROJET where IDPROJET = ?";
@@ -110,7 +106,8 @@ GROUP BY a.IDDESIGNE, t.IDPROJET) tempspasse join tempstotalprojet ttp on tempsp
         return $this->db->query($sql, array($idprojet))->result();
     }
 
-    public function getTauxOccupationAllProjet(){
+    public function getTauxOccupationAllProjet()
+    {
         $sql = "select ttp.IDPROJET, IDDESIGNE, ((tmpspasse*100)/tmpsestime) tauxoccup  from (SELECT a.IDDESIGNE, t.IDPROJET, sum(TEMPSPASSE) tmpspasse FROM tache t 
 join association_2 a on a.IDTACHE = t.IDTACHE 
 GROUP BY a.IDDESIGNE, t.IDPROJET) tempspasse join tempstotalprojet ttp on tempspasse.IDPROJET = ttp.IDPROJET";

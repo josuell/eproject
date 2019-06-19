@@ -13,6 +13,9 @@ class admin extends CI_Model
         $seconds = $heure * 3600 + $minute * 60 + $second;
         return $seconds;
     }
+    public function secondtotime($time){
+        return gmdate("H:i:s",$time%8400);
+    }
 
     public function get_entries($page, $NOMbre)
     {
@@ -81,5 +84,8 @@ class admin extends CI_Model
         } else {
             return -1;
         }
+    }
+    public function find($motcle){
+        $sql = "select * from projet p join tache t on t.idprojet=p.idprojet join user"
     }
 }

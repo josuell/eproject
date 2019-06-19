@@ -92,6 +92,11 @@
 
     chart.scrollbarX = new am4core.Scrollbar();
 </script>
+<<<<<<< HEAD
 
 </body>
+=======
+	<div><a href="javascript:window.print()">Export en pdf</a></div>
+  </body>
+>>>>>>> mybranch
 </html>
