@@ -150,4 +150,12 @@ class Taches extends CI_Controller {
         }
         else redirect('Connection/ConnectionUser');
     }
+    public function retard($idprojet){
+        $tache = $this->tache->getRetard($idprojet);
+        $data = array(
+            'page' => 'contenu/tache/retard',
+            'tache' => $tache,
+        );
+        $this->load->view('index',$data);
+    }
 }

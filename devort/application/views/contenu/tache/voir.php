@@ -24,19 +24,19 @@
                                <script>
                                    function getTache(){
                                             var select = document.getElementById("projet");
-                                            console.log("ijer tache");
+                                            
                                             var xmlhttp = new XMLHttpRequest();
                                             xmlhttp.onreadystatechange = function () {
                                                 if (this.readyState === 4 && this.status === 200) {
                                                     var sc = JSON.parse(this.responseText);
-                                                    setdetail(sc);
+                                                    setdetail(sc,select.value);
                                                 }
                                             };
                                             xmlhttp.open("GET", "<?php echo site_url('Taches/getTache/') ?>" + select.value, true);
                                             xmlhttp.send();
                                         }
 
-                                        function setdetail(array) {
+                                        function setdetail(array,idproject) {
                                             var sc = document.getElementById("tache");
                                             sc.innerHTML = "";
                                             var list = document.createElement('ul');
@@ -57,9 +57,16 @@
                                                 a2.title = "supprimer";
                                                 a2.href = "<?php echo base_url('Taches/delete/')?>"+array[i].IDTACHE;
                                                 
+                                                var a3 = document.createElement('a');
+                                                var linkText = document.createTextNode("supprimer ");
+                                                a3.appendChild(linkText);
+                                                a3.title = "Retard";
+                                                a3.href = "<?php echo base_url('Taches/retard/')?>"+idproject;
+                                                
                                                 sc.appendChild(list);
                                                 list.appendChild(a);
                                                 list.appendChild(a2);
+                                                list.appendChild(a3);
                                             }
                                         }
                                </script>

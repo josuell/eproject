@@ -20,6 +20,7 @@
                 else if(strcmp($data->NOMCATEGORIE,"manager")==0){?>
                     <a href="<?php echo base_url('Projets/avancement');?>">avancement projet</a>
                     <a href="<?php echo base_url('Projets/avancementTL');?>">avancement projet par teamlead</a>
+                    
                     <?php }
                 else{?>
                     <a href="<?php echo base_url('');?>">mes taches</a>
