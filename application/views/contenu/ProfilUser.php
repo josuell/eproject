@@ -16,6 +16,7 @@
              if(strcmp($data->NOMCATEGORIE,"teamlead")==0){?>
                 <a href="<?php echo base_url('Taches/voirMyProjet/2');?>">ajout tache</a>
                 <a href="<?php echo base_url('Taches/voirMyTache/2');?>">liste tache</a>
+                 <a href="<?php echo base_url('Taches/notAffected/' . $data->IDPROJET); ?>">Taches non-affectées</a>
                 <?php }
                 else if(strcmp($data->NOMCATEGORIE,"manager")==0){?>
                     <a href="<?php echo base_url('Projets/avancement');?>">avancement projet</a>
@@ -23,7 +24,7 @@
                     
                     <?php }
                 else{?>
-                    <a href="<?php echo base_url('');?>">mes taches</a>
+                    <a href="<?php echo base_url('Taches/mestaches/' . $data->IDPROJET); ?>">mes taches</a>
                     <a href="<?php echo base_url('Taches/voirTache/'.$data->IDPROJET);?>">mes avancements</a>
 
                     <?php }

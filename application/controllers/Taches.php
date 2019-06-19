@@ -158,4 +158,61 @@ class Taches extends CI_Controller {
         );
         $this->load->view('index',$data);
     }
+
+    public function mestaches($idprojet)
+    {
+        $user = $this->session->userdata('user')->IDUSER;
+        $tacheUser = $this->tache->getTacheUser($idprojet, $user);
+        var_dump($tacheUser);
+        $data = array(
+            'page' => 'contenu/tache/index',
+            'taches' => $tacheUser,
+            'title' => 'Mes taches'
+        );
+        $this->load->view('index', $data);
+    }
+
+    public function notAffected($idprojet)
+    {
+        $taches = $this->tache->getTachesNonAssignees($idprojet);
+        $data = array(
+            'idprojet' => $idprojet,
+            'page' => 'contenu/tache/index',
+            'taches' => $taches,
+            'title' => 'Taches non-affectées',
+            'affectation' => true
+        );
+        $this->load->view('index', $data);
+    }
+
+    public function affecter($idprojet, $idtache)
+    {
+        $tache = $this->tache->get($idtache);
+        $dev = $this->projet->getDeveloppeurs($idprojet);
+        $data = array(
+            'page' => 'contenu/tache/assign',
+            'tache' => $tache,
+            'devs' => $dev,
+            'idprojet' => $idprojet
+        );
+        $this->load->view('index', $data);
+    }
+
+    public function assigner($idprojet, $idtache)
+    {
+        $user = $this->session->userdata('user')->IDUSER;
+        if ($this->tache->assigner($idtache, $_POST['designe'], $user) == 0) {
+            redirect('Taches/notAffected/' . $idprojet);
+        } else {
+            redirect('Taches/affecter/' . $idprojet . '/' . $idtache . '?err=0');
+        }
+    }
+
+
+
+    public function getGanttTaches($idprojet)
+    {
+        $taches = $this->tache->getTache($idprojet);
+        echo json_encode($taches);
+    }
 }

@@ -45,6 +45,7 @@
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="arisoa">
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Connect" />
+                                <a href="<?= base_url('Connection/connectionUser') ?>">Connexion utilisateur</a>
                             </fieldset>
                         </form>
                         <!-- <a href="<?php echo base_url('CrudUser/creerAdmin/')?>">admin</a> -->

@@ -86,4 +86,28 @@ class tache extends CI_Model
         $result = $query->result();
         return $result; 
     }
+
+    public function getTacheUser($idprojet, $iduser)
+    {
+        $sql = "select * from tache t join association_2 a on t.IDTACHE = a.IDTACHE where IDPROJET = ? and IDDESIGNE = ?";
+        $query = $this->db->query($sql, array($idprojet, $iduser));
+        return $query->result();
+    }
+
+    public function getTachesNonAssignees($idprojet)
+    {
+        $sql = "select * from tache t where IDTACHE not in (select idtache from association_2) and IDPROJET = ?";
+        $query = $this->db->query($sql, array( $idprojet));
+        return $query->result();
+    }
+
+    public function assigner($idtache, $iduser, $idteamlead)
+    {
+        $sql = "insert into association_2 values (?,?,?)";
+        if($this->db->query($sql, array($idteamlead, $idtache, $iduser))){
+            return 0;
+        } else {
+            return -1;
+        }
+    }
 }

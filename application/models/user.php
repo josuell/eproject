@@ -56,7 +56,7 @@ class user extends CI_Model
     }
     public function verify($email,$mdp)
     {
-        $mdp = sha1($mdp);
+//        $mdp = sha1($mdp);
         $sql = "SELECT * FROM USER WHERE EMAIL= ? and MDP= ? ";
         $query = $this->db->query($sql, array($email,$mdp));
         $result = $query->result();

@@ -86,6 +86,6 @@ class admin extends CI_Model
         }
     }
     public function find($motcle){
-        $sql = "select * from projet p join tache t on t.idprojet=p.idprojet join user"
+        $sql = "select * from projet p join tache t on t.idprojet=p.idprojet join user";
     }
 }
