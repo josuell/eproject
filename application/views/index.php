@@ -19,24 +19,25 @@
 
     <link href="<?php echo base_url('assets/vendor/morrisjs/morris.css'); ?>" rel="stylesheet">
 
-    <link href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet"
+          type="text/css">
 
- 
+
 </head>
 
 <body>
 
-    <div id="wrapper">
+<div id="wrapper">
 
-        <!-- Navigation -->
-    <?php include('constant/menu.php');?>
-    <?php include($page.'.php');?>
-        
-        <!-- /#page-wrapper -->
+    <!-- Navigation -->
+    <?php include('constant/menu.php'); ?>
+    <?php include($page . '.php'); ?>
 
-    </div>
-    <!-- /#wrapper -->
-        <?php include('constant/footer.php')?>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+<?php include('constant/footer.php') ?>
 </body>
 
 </html>

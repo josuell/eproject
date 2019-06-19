@@ -158,4 +158,10 @@ class Taches extends CI_Controller {
         );
         $this->load->view('index',$data);
     }
+
+    public function getGanttTaches($idprojet)
+    {
+        $taches = $this->tache->getTache($idprojet);
+        echo json_encode($taches);
+    }
 }
