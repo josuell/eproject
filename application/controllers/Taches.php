@@ -176,4 +176,10 @@ class Taches extends CI_Controller
         $tache = $this->tache->getTache($idprojet);
         echo json_encode($tache);
     }
+
+    public function getGanttTaches($idprojet)
+    {
+        $taches = $this->tache->getTache($idprojet);
+        echo json_encode($taches);
+    }
 }

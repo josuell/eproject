@@ -10,6 +10,7 @@ class CrudUser extends CI_Controller
         $this->load->model('categorie');
         $this->load->model('user');
         $this->load->model('roles');
+        $this->load->model('projet');
         $this->load->model('admin');
     }
 
@@ -133,6 +134,11 @@ class CrudUser extends CI_Controller
 
     public function gantt()
     {
-        $this->load->view('gant');
+        $projets = $this->projet->get_entries();
+        $data = array(
+            'page' => 'contenu/gantt',
+            'projets' => $projets
+        );
+        $this->load->view('index', $data);
     }
 }
