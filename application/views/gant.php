@@ -92,6 +92,6 @@ series1.columns.template.strokeOpacity = 1;
 
 chart.scrollbarX = new am4core.Scrollbar();
 </script>
-	
+	<div><a href="javascript:window.print()">Export en pdf</a></div>
   </body>
 </html>

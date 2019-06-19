@@ -67,4 +67,12 @@ class Projets extends CI_Controller {
         );
         $this->load->view('index',$data);
     }
+    public function avancementTL(){
+        $avancement = $this->projet->avancementProjetTL();
+        $data = array(
+            'page' => 'contenu/projet/etatParTeamlead',
+            'avancement' => $avancement
+        );
+        $this->load->view('index',$data);
+    }
 }
